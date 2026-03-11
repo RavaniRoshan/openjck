@@ -25,6 +25,7 @@ class TraceEvent:
     tokens_in: int = 0
     tokens_out: int = 0
     model: Optional[str] = None
+    cost_usd: float = 0.0
 
     def to_dict(self):
         return asdict(self)
@@ -43,6 +44,7 @@ class Trace:
     error: Optional[str] = None
     steps: list = field(default_factory=list)
     metadata: dict = field(default_factory=dict)
+    total_cost_usd: float = 0.0
 
     def to_dict(self):
         d = asdict(self)
@@ -90,6 +92,9 @@ class TraceCollector:
         trace.status = "failed" if error else "completed"
         trace.error = error
 
+        # Sum cost_usd from all steps
+        trace.total_cost_usd = sum(step.get("cost_usd", 0.0) for step in trace.steps)
+
         stack = cls._get_stack()
         if trace in stack:
             stack.remove(trace)
@@ -129,6 +134,7 @@ class EventCapture:
         self.output = None
         self.tokens_in = 0
         self.tokens_out = 0
+        self.cost_usd = 0.0
         self._start_time = None
         self._step_id = None
 
@@ -155,6 +161,7 @@ class EventCapture:
             tokens_in=self.tokens_in,
             tokens_out=self.tokens_out,
             model=self.model,
+            cost_usd=self.cost_usd,
         )
         TraceCollector.add_event(event)
         return False  # don't suppress exceptions
