@@ -4,15 +4,16 @@ FastAPI backend. Serves trace data + the UI.
 Run: python -m agentrace.server
 """
 
-import os
 import sys
+from difflib import unified_diff
 from pathlib import Path
+from typing import Any
 
 # Add parent to path when run as module
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 try:
-    from fastapi import FastAPI, HTTPException
+    from fastapi import FastAPI, HTTPException, Query
     from fastapi.middleware.cors import CORSMiddleware
     from fastapi.responses import HTMLResponse, JSONResponse
     from fastapi.staticfiles import StaticFiles
@@ -37,6 +38,72 @@ app.add_middleware(
 @app.get("/api/traces")
 def list_traces():
     return TraceStorage.list_all()
+
+
+def _safe_json(value: Any) -> str:
+    import json
+
+    try:
+        return json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False)
+    except TypeError:
+        return str(value)
+
+
+def _diff_text(a: Any, b: Any) -> str:
+    left = _safe_json(a).splitlines()
+    right = _safe_json(b).splitlines()
+    return "\n".join(unified_diff(left, right, fromfile="left", tofile="right", lineterm=""))
+
+
+@app.get("/api/traces/compare")
+def compare_traces(
+    left_trace_id: str = Query(..., alias="left"),
+    right_trace_id: str = Query(..., alias="right"),
+):
+    left = TraceStorage.load(left_trace_id)
+    right = TraceStorage.load(right_trace_id)
+
+    if not left or not right:
+        raise HTTPException(status_code=404, detail="One or both traces not found")
+
+    left_steps = left.get("steps", [])
+    right_steps = right.get("steps", [])
+    max_len = max(len(left_steps), len(right_steps))
+    comparisons = []
+
+    for idx in range(max_len):
+        left_step = left_steps[idx] if idx < len(left_steps) else None
+        right_step = right_steps[idx] if idx < len(right_steps) else None
+        same_name = bool(
+            left_step
+            and right_step
+            and left_step.get("name")
+            and left_step.get("name") == right_step.get("name")
+        )
+
+        left_tokens = (left_step or {}).get("tokens_in", 0) + (left_step or {}).get("tokens_out", 0)
+        right_tokens = (right_step or {}).get("tokens_in", 0) + (right_step or {}).get("tokens_out", 0)
+
+        comparisons.append(
+            {
+                "step_index": idx,
+                "left_step": left_step,
+                "right_step": right_step,
+                "name_match": same_name,
+                "missing_on_left": left_step is None,
+                "missing_on_right": right_step is None,
+                "duration_diff_ms": ((left_step or {}).get("duration_ms", 0) - (right_step or {}).get("duration_ms", 0)),
+                "token_diff": left_tokens - right_tokens,
+                "input_diff": _diff_text(left_step.get("input"), right_step.get("input")) if same_name else None,
+                "output_diff": _diff_text(left_step.get("output"), right_step.get("output")) if same_name else None,
+            }
+        )
+
+    return {
+        "left_trace": left,
+        "right_trace": right,
+        "step_comparisons": comparisons,
+    }
 
 
 @app.get("/api/traces/{trace_id}")
