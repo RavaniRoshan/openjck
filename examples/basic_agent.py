@@ -80,7 +80,10 @@ def agent_run_success() -> dict:
 
     print("[Agent] Calling LLM with context...")
     messages = [
-        {"role": "user", "content": f"Based on these search results and document: {search_results} {doc_content}"},
+        {
+            "role": "user",
+            "content": f"Based on these search results and document: {search_results} {doc_content}",
+        },
         {"role": "user", "content": query},
     ]
     response = call_llm_with_context(messages)

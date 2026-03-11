@@ -42,7 +42,9 @@ def list_traces(
     from_date: str | None = Query(default=None, alias="from"),
     to_date: str | None = Query(default=None, alias="to"),
 ):
-    return TraceStorage.search(q=q, status=status, model=model, from_date=from_date, to_date=to_date)
+    return TraceStorage.search(
+        q=q, status=status, model=model, from_date=from_date, to_date=to_date
+    )
 
 
 def _safe_json(value: Any) -> str:
@@ -87,7 +89,9 @@ def compare_traces(
         )
 
         left_tokens = (left_step or {}).get("tokens_in", 0) + (left_step or {}).get("tokens_out", 0)
-        right_tokens = (right_step or {}).get("tokens_in", 0) + (right_step or {}).get("tokens_out", 0)
+        right_tokens = (right_step or {}).get("tokens_in", 0) + (right_step or {}).get(
+            "tokens_out", 0
+        )
 
         comparisons.append(
             {
@@ -97,10 +101,17 @@ def compare_traces(
                 "name_match": same_name,
                 "missing_on_left": left_step is None,
                 "missing_on_right": right_step is None,
-                "duration_diff_ms": ((left_step or {}).get("duration_ms", 0) - (right_step or {}).get("duration_ms", 0)),
+                "duration_diff_ms": (
+                    (left_step or {}).get("duration_ms", 0)
+                    - (right_step or {}).get("duration_ms", 0)
+                ),
                 "token_diff": left_tokens - right_tokens,
-                "input_diff": _diff_text(left_step.get("input"), right_step.get("input")) if same_name else None,
-                "output_diff": _diff_text(left_step.get("output"), right_step.get("output")) if same_name else None,
+                "input_diff": _diff_text(left_step.get("input"), right_step.get("input"))
+                if same_name
+                else None,
+                "output_diff": _diff_text(left_step.get("output"), right_step.get("output"))
+                if same_name
+                else None,
             }
         )
 

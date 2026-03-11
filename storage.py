@@ -22,7 +22,6 @@ _server_lock = threading.Lock()
 
 
 class TraceStorage:
-
     @staticmethod
     def _trace_summary(data: dict) -> dict:
         return {
@@ -125,7 +124,9 @@ class TraceStorage:
             try:
                 with open(path) as f:
                     data = json.load(f)
-                    if TraceStorage._matches_filters(data, q, status, model, from_date_parsed, to_date_parsed):
+                    if TraceStorage._matches_filters(
+                        data, q, status, model, from_date_parsed, to_date_parsed
+                    ):
                         traces.append(TraceStorage._trace_summary(data))
             except Exception:
                 continue
@@ -163,4 +164,5 @@ class TraceStorage:
         t.start()
         # Give it a moment to start
         import time
+
         time.sleep(1.5)

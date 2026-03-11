@@ -14,7 +14,7 @@ from dataclasses import dataclass, field, asdict
 @dataclass
 class TraceEvent:
     step_id: int
-    type: str          # "llm_call" | "tool_call" | "agent_step" | "custom"
+    type: str  # "llm_call" | "tool_call" | "agent_step" | "custom"
     name: str
     started_at: str
     duration_ms: Optional[float] = None
@@ -77,7 +77,7 @@ class TraceCollector:
             trace_id=str(uuid.uuid4())[:8],
             run_name=run_name,
             started_at=datetime.now(timezone.utc).isoformat(),
-            metadata=metadata or {}
+            metadata=metadata or {},
         )
         cls._get_stack().append(trace)
         return trace
@@ -124,8 +124,14 @@ class EventCapture:
             cap.output = result
     """
 
-    def __init__(self, event_type: str, name: str, input: Any = None,
-                 model: str = None, metadata: dict = None):
+    def __init__(
+        self,
+        event_type: str,
+        name: str,
+        input: Any = None,
+        model: str = None,
+        metadata: dict = None,
+    ):
         self.event_type = event_type
         self.name = name
         self.input = input

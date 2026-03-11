@@ -46,7 +46,6 @@ _ensure_costs_file()
 
 
 class TraceStorage:
-
     @staticmethod
     def save(trace: Trace) -> Path:
         TRACES_DIR.mkdir(parents=True, exist_ok=True)
@@ -73,17 +72,19 @@ class TraceStorage:
                 with open(path) as f:
                     data = json.load(f)
                     # Return summary only for list view
-                    traces.append({
-                        "trace_id": data["trace_id"],
-                        "run_name": data["run_name"],
-                        "started_at": data["started_at"],
-                        "status": data["status"],
-                        "total_duration_ms": data.get("total_duration_ms"),
-                        "total_tokens": data.get("total_tokens", 0),
-                        "total_cost_usd": data.get("total_cost_usd", 0.0),
-                        "step_count": len(data.get("steps", [])),
-                        "error": data.get("error"),
-                    })
+                    traces.append(
+                        {
+                            "trace_id": data["trace_id"],
+                            "run_name": data["run_name"],
+                            "started_at": data["started_at"],
+                            "status": data["status"],
+                            "total_duration_ms": data.get("total_duration_ms"),
+                            "total_tokens": data.get("total_tokens", 0),
+                            "total_cost_usd": data.get("total_cost_usd", 0.0),
+                            "step_count": len(data.get("steps", [])),
+                            "error": data.get("error"),
+                        }
+                    )
             except Exception:
                 continue
         return traces
@@ -97,9 +98,13 @@ class TraceStorage:
         return False
 
     @staticmethod
-    def search(q: Optional[str] = None, status: Optional[str] = None,
-               model: Optional[str] = None, from_date: Optional[str] = None,
-               to_date: Optional[str] = None) -> list[dict]:
+    def search(
+        q: Optional[str] = None,
+        status: Optional[str] = None,
+        model: Optional[str] = None,
+        from_date: Optional[str] = None,
+        to_date: Optional[str] = None,
+    ) -> list[dict]:
         """Search traces by multiple criteria.
 
         Args:
@@ -131,10 +136,7 @@ class TraceStorage:
 
                 # Filter by model (check any step)
                 if model:
-                    has_model = any(
-                        step.get("model") == model
-                        for step in data.get("steps", [])
-                    )
+                    has_model = any(step.get("model") == model for step in data.get("steps", []))
                     if not has_model:
                         continue
 
@@ -146,17 +148,19 @@ class TraceStorage:
                     continue
 
                 # Add to results
-                results.append({
-                    "trace_id": data["trace_id"],
-                    "run_name": data["run_name"],
-                    "started_at": data["started_at"],
-                    "status": data["status"],
-                    "total_duration_ms": data.get("total_duration_ms"),
-                    "total_tokens": data.get("total_tokens", 0),
-                    "total_cost_usd": data.get("total_cost_usd", 0.0),
-                    "step_count": len(data.get("steps", [])),
-                    "error": data.get("error"),
-                })
+                results.append(
+                    {
+                        "trace_id": data["trace_id"],
+                        "run_name": data["run_name"],
+                        "started_at": data["started_at"],
+                        "status": data["status"],
+                        "total_duration_ms": data.get("total_duration_ms"),
+                        "total_tokens": data.get("total_tokens", 0),
+                        "total_cost_usd": data.get("total_cost_usd", 0.0),
+                        "step_count": len(data.get("steps", [])),
+                        "error": data.get("error"),
+                    }
+                )
             except Exception:
                 continue
 
@@ -186,4 +190,5 @@ class TraceStorage:
         t.start()
         # Give it a moment to start
         import time
+
         time.sleep(1.5)

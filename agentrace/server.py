@@ -43,7 +43,9 @@ def list_traces(
     to_date: Optional[str] = None,
 ):
     """List or search traces with optional filtering."""
-    return TraceStorage.search(q=q, status=status, model=model, from_date=from_date, to_date=to_date)
+    return TraceStorage.search(
+        q=q, status=status, model=model, from_date=from_date, to_date=to_date
+    )
 
 
 @app.get("/api/traces/{trace_id}")

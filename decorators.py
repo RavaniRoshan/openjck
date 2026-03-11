@@ -23,6 +23,7 @@ def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
         def run_agent(task: str):
             ...
     """
+
     def decorator(func: Callable):
         run_name = name or func.__name__
 
@@ -41,9 +42,11 @@ def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
                 TraceCollector.finish(t, error=error_msg)
                 TraceStorage.save(t)
                 print(f"\n[AgentTrace] Run complete → {t.status.upper()}")
-                print(f"[AgentTrace] {len(t.steps)} steps | "
-                      f"{t.total_tokens_in + t.total_tokens_out} tokens | "
-                      f"{t.total_duration_ms}ms")
+                print(
+                    f"[AgentTrace] {len(t.steps)} steps | "
+                    f"{t.total_tokens_in + t.total_tokens_out} tokens | "
+                    f"{t.total_duration_ms}ms"
+                )
                 print(f"[AgentTrace] View trace: http://localhost:7823/trace/{t.trace_id}")
                 if auto_open:
                     TraceStorage.ensure_server_running()
@@ -62,9 +65,11 @@ def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
                 TraceCollector.finish(t, error=error_msg)
                 TraceStorage.save(t)
                 print(f"\n[AgentTrace] Run complete → {t.status.upper()}")
-                print(f"[AgentTrace] {len(t.steps)} steps | "
-                      f"{t.total_tokens_in + t.total_tokens_out} tokens | "
-                      f"{t.total_duration_ms}ms")
+                print(
+                    f"[AgentTrace] {len(t.steps)} steps | "
+                    f"{t.total_tokens_in + t.total_tokens_out} tokens | "
+                    f"{t.total_duration_ms}ms"
+                )
                 print(f"[AgentTrace] View trace: http://localhost:7823/trace/{t.trace_id}")
                 if auto_open:
                     TraceStorage.ensure_server_running()
@@ -96,6 +101,7 @@ def trace_llm(func: Callable = None, *, model: str = None):
         def call_openai(messages):
             ...
     """
+
     def decorator(func: Callable):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -104,10 +110,7 @@ def trace_llm(func: Callable = None, *, model: str = None):
             detected_model = model or _detect_model(args, kwargs)
 
             with EventCapture(
-                event_type="llm_call",
-                name=func.__name__,
-                input=input_data,
-                model=detected_model
+                event_type="llm_call", name=func.__name__, input=input_data, model=detected_model
             ) as cap:
                 result = func(*args, **kwargs)
                 cap.output = _extract_llm_output(result)
@@ -120,10 +123,7 @@ def trace_llm(func: Callable = None, *, model: str = None):
             detected_model = model or _detect_model(args, kwargs)
 
             with EventCapture(
-                event_type="llm_call",
-                name=func.__name__,
-                input=input_data,
-                model=detected_model
+                event_type="llm_call", name=func.__name__, input=input_data, model=detected_model
             ) as cap:
                 result = await func(*args, **kwargs)
                 cap.output = _extract_llm_output(result)
@@ -152,6 +152,7 @@ def trace_tool(func: Callable = None, *, name: str = None):
         def write_file(path: str, content: str):
             ...
     """
+
     def decorator(func: Callable):
         tool_name = name or func.__name__
 
@@ -192,6 +193,7 @@ def trace_tool(func: Callable = None, *, name: str = None):
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
+
 def _extract_input(func, args, kwargs) -> Any:
     try:
         sig = inspect.signature(func)
@@ -214,6 +216,7 @@ def _safe_serialize(obj: Any, max_len: int = 2000) -> Any:
         return serialized
     try:
         import json
+
         s = json.dumps(obj, default=str)
         return json.loads(s[:max_len])
     except Exception:

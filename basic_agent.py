@@ -10,6 +10,7 @@ Then: ollama pull qwen2.5-coder:7b-instruct-q4_K_M
 
 import sys
 import os
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 import json
@@ -20,14 +21,25 @@ from agentrace import trace, trace_llm, trace_tool
 
 # ── Simulated Tools (no real dependencies) ───────────────────────────────────
 
+
 @trace_tool
 def web_search(query: str) -> str:
     """Simulated web search"""
     time.sleep(random.uniform(0.1, 0.4))
-    return json.dumps([
-        {"title": f"Result 1 for: {query}", "url": "https://example.com/1", "snippet": "This is a relevant result..."},
-        {"title": f"Result 2 for: {query}", "url": "https://example.com/2", "snippet": "Another relevant result..."},
-    ])
+    return json.dumps(
+        [
+            {
+                "title": f"Result 1 for: {query}",
+                "url": "https://example.com/1",
+                "snippet": "This is a relevant result...",
+            },
+            {
+                "title": f"Result 2 for: {query}",
+                "url": "https://example.com/2",
+                "snippet": "Another relevant result...",
+            },
+        ]
+    )
 
 
 @trace_tool
@@ -56,6 +68,7 @@ def run_python(code: str) -> str:
 
 # ── LLM Call (simulated — swap with real ollama.chat) ─────────────────────────
 
+
 @trace_llm(model="qwen2.5-coder:7b")
 def call_llm(messages: list, step_num: int = 0) -> dict:
     """
@@ -66,11 +79,31 @@ def call_llm(messages: list, step_num: int = 0) -> dict:
     time.sleep(random.uniform(0.3, 0.8))
 
     responses = [
-        {"content": "I need to search for information about the topic first.", "tokens_in": 250, "tokens_out": 45},
-        {"content": "I found relevant results. Let me read the existing notes file.", "tokens_in": 380, "tokens_out": 62},
-        {"content": "Now I have enough context. Let me write a Python script to process this.", "tokens_in": 520, "tokens_out": 88},
-        {"content": "```python\nnumbers = [1,2,3,4,5]\nsquares = [n**2 for n in numbers]\nprint(squares)\n```", "tokens_in": 680, "tokens_out": 120},
-        {"content": "The code ran successfully. Let me write the final summary.", "tokens_in": 720, "tokens_out": 95},
+        {
+            "content": "I need to search for information about the topic first.",
+            "tokens_in": 250,
+            "tokens_out": 45,
+        },
+        {
+            "content": "I found relevant results. Let me read the existing notes file.",
+            "tokens_in": 380,
+            "tokens_out": 62,
+        },
+        {
+            "content": "Now I have enough context. Let me write a Python script to process this.",
+            "tokens_in": 520,
+            "tokens_out": 88,
+        },
+        {
+            "content": "```python\nnumbers = [1,2,3,4,5]\nsquares = [n**2 for n in numbers]\nprint(squares)\n```",
+            "tokens_in": 680,
+            "tokens_out": 120,
+        },
+        {
+            "content": "The code ran successfully. Let me write the final summary.",
+            "tokens_in": 720,
+            "tokens_out": 95,
+        },
     ]
 
     r = responses[min(step_num, len(responses) - 1)]
@@ -79,6 +112,7 @@ def call_llm(messages: list, step_num: int = 0) -> dict:
     class FakeResponse:
         class message:
             content = r["content"]
+
         prompt_eval_count = r["tokens_in"]
         eval_count = r["tokens_out"]
 
@@ -86,6 +120,7 @@ def call_llm(messages: list, step_num: int = 0) -> dict:
 
 
 # ── The Agent Loop ────────────────────────────────────────────────────────────
+
 
 @trace(name="research_and_summarize")
 def run_research_agent(task: str):
@@ -106,7 +141,7 @@ def run_research_agent(task: str):
         response = call_llm(messages, step_num=step)
         content = response.message.content
         messages.append({"role": "assistant", "content": content})
-        print(f"[Agent Step {step+1}] LLM: {content[:80]}...")
+        print(f"[Agent Step {step + 1}] LLM: {content[:80]}...")
 
         # Simulate tool use based on step
         if step == 0:
@@ -139,6 +174,7 @@ def run_research_agent(task: str):
 
 
 # ── Run with intentional failure (to demo error tracing) ──────────────────────
+
 
 @trace(name="agent_with_error")
 def run_failing_agent(task: str):
