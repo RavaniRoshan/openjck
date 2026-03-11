@@ -143,7 +143,7 @@ def run_research_agent(task: str):
 @trace(name="agent_with_error")
 def run_failing_agent(task: str):
     """Agent that fails at step 3 — shows error tracing"""
-    print(f"\n[Agent] Starting failing task demo...\n")
+    print("\n[Agent] Starting failing task demo...\n")
 
     messages = [{"role": "user", "content": task}]
 

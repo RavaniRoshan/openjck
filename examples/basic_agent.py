@@ -124,8 +124,8 @@ def main():
     # Run 1: Successful trace
     print(">>> Running successful agent trace...")
     try:
-        result1 = agent_run_success()
-        print(f"✓ Successful run completed")
+        agent_run_success()
+        print("✓ Successful run completed")
         print()
     except Exception as e:
         print(f"✗ Unexpected error in successful run: {e}")
@@ -136,9 +136,9 @@ def main():
 
     # Run 2: Failed trace
     try:
-        result2 = agent_run_with_error()
-    except ValueError as e:
-        print(f"✓ Error handling trace completed (expected)")
+        agent_run_with_error()
+    except ValueError:
+        print("✓ Error handling trace completed (expected)")
         print()
 
     # Verify traces were created

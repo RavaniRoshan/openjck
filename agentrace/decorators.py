@@ -78,7 +78,7 @@ def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
                 raise
             finally:
                 TraceCollector.finish(t, error=error_msg)
-                path = TraceStorage.save(t)
+                TraceStorage.save(t)
                 print(f"\n[AgentTrace] Run complete → {t.status.upper()}")
                 print(f"[AgentTrace] {len(t.steps)} steps | "
                       f"{t.total_tokens_in + t.total_tokens_out} tokens | "

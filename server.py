@@ -15,8 +15,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 try:
     from fastapi import FastAPI, HTTPException, Query
     from fastapi.middleware.cors import CORSMiddleware
-    from fastapi.responses import HTMLResponse, JSONResponse
-    from fastapi.staticfiles import StaticFiles
+    from fastapi.responses import HTMLResponse
     import uvicorn
 except ImportError:
     print("[AgentTrace] Missing dependencies. Run: pip install agentrace[server]")
@@ -147,5 +146,5 @@ def serve_ui(trace_id: str = None):
 
 if __name__ == "__main__":
     print(f"\n[AgentTrace] UI running at http://localhost:{SERVER_PORT}")
-    print(f"[AgentTrace] Serving traces from ~/.agentrace/traces/\n")
+    print("[AgentTrace] Serving traces from ~/.agentrace/traces/\n")
     uvicorn.run(app, host="0.0.0.0", port=SERVER_PORT, log_level="error")

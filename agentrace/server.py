@@ -4,12 +4,10 @@ FastAPI-based UI server for trace visualization.
 Runs on port 7823 by default.
 """
 
-import sys
 import uvicorn
 from pathlib import Path
 from typing import Optional
 from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 

@@ -180,7 +180,7 @@ class TraceStorage:
                 )
             except Exception as e:
                 print(f"[AgentTrace] Could not start UI server: {e}")
-                print(f"[AgentTrace] Start manually: python -m agentrace.server")
+                print("[AgentTrace] Start manually: python -m agentrace.server")
 
         t = threading.Thread(target=start, daemon=True)
         t.start()
