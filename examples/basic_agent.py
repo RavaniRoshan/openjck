@@ -128,10 +128,10 @@ def main():
     print(">>> Running successful agent trace...")
     try:
         agent_run_success()
-        print("✓ Successful run completed")
+        print("[OK] Successful run completed")
         print()
     except Exception as e:
-        print(f"✗ Unexpected error in successful run: {e}")
+        print(f"[ERROR] Unexpected error in successful run: {e}")
         sys.exit(1)
 
     print()
@@ -141,16 +141,16 @@ def main():
     try:
         agent_run_with_error()
     except ValueError:
-        print("✓ Error handling trace completed (expected)")
+        print("[OK] Error handling trace completed (expected)")
         print()
 
     # Verify traces were created
     traces_dir = Path.home() / ".agentrace" / "traces"
     if traces_dir.exists():
         trace_files = list(traces_dir.glob("*.json"))
-        print(f"\n✓ {len(trace_files)} trace files created in {traces_dir}")
+        print(f"\n[OK] {len(trace_files)} trace files created in {traces_dir}")
     else:
-        print(f"\n✗ No traces directory found at {traces_dir}")
+        print(f"\n[ERROR] No traces directory found at {traces_dir}")
         sys.exit(1)
 
     print()
