@@ -1,17 +1,8 @@
 <div align="center">
 
+<img src="./banner.svg" alt="AgentTrace — Visual debugger for AI agent loops" width="100%"/>
+
 <br />
-
-```
- █████   ██████  ███████ ███    ██ ████████ ██████   █████   ██████ ███████ 
-██   ██ ██       ██      ████   ██    ██    ██   ██ ██   ██ ██      ██      
-███████ ██   ███ █████   ██ ██  ██    ██    ██████  ███████ ██      █████   
-██   ██ ██    ██ ██      ██  ██ ██    ██    ██   ██ ██   ██ ██      ██      
-██   ██  ██████  ███████ ██   ████    ██    ██   ██ ██   ██  ██████ ███████ 
-```
-
-**Visual debugger for AI agent loops. Step-by-step. Locally. Zero config.**
-
 <br />
 
 [![npm](https://img.shields.io/npm/v/%40ravaniroshan%2Fagentrace?color=7c6af7&labelColor=1a1a1f&style=flat-square&label=npm)](https://www.npmjs.com/package/@ravaniroshan/agentrace)
@@ -20,7 +11,6 @@
 [![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-f5a623?labelColor=1a1a1f&style=flat-square)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-white?labelColor=1a1a1f&style=flat-square)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/ravaniroshan/agentrace?color=7c6af7&labelColor=1a1a1f&style=flat-square)](https://github.com/ravaniroshan/agentrace)
-(https://www.npmjs.com/package/@ravaniroshan/agentrace)
 
 <br />
 
