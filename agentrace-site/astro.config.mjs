@@ -21,6 +21,13 @@ export default defineConfig({
         {
           tag: "meta",
           attrs: {
+            name: "google-site-verification",
+            content: "5sngnBez0zAJUjzsGz8WTpoJ6Jybxa5YAFORTOBDKvk"
+          },
+        },
+        {
+          tag: "meta",
+          attrs: {
             property: "og:image",
             content: "https://agentrace.dev/og.png"
           },
