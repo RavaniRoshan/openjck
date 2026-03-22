@@ -31,12 +31,12 @@ jobs:
 
       - name: Verify trace files
         run: |
-          if [ ! -d ~/.agentclaw/traces/ ] || [ -z "$(ls -A ~/.agentclaw/traces/)" ]; then
-            echo "Trace files were not created in ~/.agentclaw/traces/!"
+          if [ ! -d ~/.openjck/traces/ ] || [ -z "$(ls -A ~/.openjck/traces/)" ]; then
+            echo "Trace files were not created in ~/.openjck/traces/!"
             exit 1
           fi
           echo "Trace files found:"
-          ls -la ~/.agentclaw/traces/
+          ls -la ~/.openjck/traces/
 
   lint:
     runs-on: ubuntu-latest

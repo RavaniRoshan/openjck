@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AgentTrace</title>
+<title>OpenJCK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -906,7 +906,7 @@
 <div class="topbar">
   <div class="logo">
     <div class="logo-dot"></div>
-    AgentTrace
+    OpenJCK
   </div>
   <span class="badge badge-version">v0.1.0</span>
   <div class="topbar-right">
@@ -942,10 +942,10 @@
       <div class="empty-icon">◈</div>
       <div class="empty-title">No trace selected</div>
       <div style="color:var(--text3);font-size:12px;text-align:center;max-width:300px;line-height:1.8">
-        Run your agent with AgentClaw decorators and select a run from the sidebar.
+        Run your agent with OpenJCK decorators and select a run from the sidebar.
       </div>
       <div class="empty-code">
-        <span class="c-purple">from</span> agentclaw <span class="c-purple">import</span> trace, trace_llm, trace_tool<br><br>
+        <span class="c-purple">from</span> openjck <span class="c-purple">import</span> trace, trace_llm, trace_tool<br><br>
         <span class="c-yellow">@trace</span><br>
         <span class="c-purple">def</span> <span class="c-green">my_agent</span>(task):<br>
         &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-blue">...</span>
@@ -1005,7 +1005,7 @@ async function loadTraces() {
     }
   } catch (e) {
     document.getElementById('trace-list').innerHTML =
-      `<div style="padding:16px;color:var(--red);font-size:11px;">Cannot connect to AgentClaw server.<br>Run: python -m agentclaw.server</div>`;
+      `<div style="padding:16px;color:var(--red);font-size:11px;">Cannot connect to OpenJCK server.<br>Run: python -m openjck.server</div>`;
   }
 }
 

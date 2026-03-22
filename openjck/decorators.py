@@ -5,9 +5,48 @@ The entire public API. Three decorators. That's it.
 
 import functools
 import inspect
+import json
+from pathlib import Path
 from typing import Any, Callable, Optional
 from .collector import TraceCollector, EventCapture
 from .storage import TraceStorage
+
+
+def _load_costs() -> dict:
+    """Load model costs from ~/.openjck/costs.json."""
+    costs_file = Path.home() / ".openjck" / "costs.json"
+    if not costs_file.exists():
+        return {}
+    try:
+        with open(costs_file) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _get_model_cost(model_name: Optional[str], tokens_in: int, tokens_out: int) -> float:
+    """Calculate cost for a model based on token counts.
+
+    Args:
+        model_name: Name of the model
+        tokens_in: Number of input tokens
+        tokens_out: Number of output tokens
+
+    Returns:
+        Cost in USD (rounded to 6 decimals)
+    """
+    if not model_name:
+        return 0.0
+
+    costs = _load_costs()
+    model_pricing = costs.get(model_name) or costs.get("default", {})
+
+    input_cost_per_mtok = model_pricing.get("input", 0.0)
+    output_cost_per_mtok = model_pricing.get("output", 0.0)
+
+    # Cost per 1M tokens
+    cost = (tokens_in * input_cost_per_mtok + tokens_out * output_cost_per_mtok) / 1_000_000
+    return round(cost, 6)
 
 
 def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
@@ -41,10 +80,11 @@ def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
             finally:
                 TraceCollector.finish(t, error=error_msg)
                 TraceStorage.save(t)
-                print(f"\n[OpenJCK] Run complete → {t.status.upper()}")
+                print(f"\n[OpenJCK] Run complete -> {t.status.upper()}")
                 print(
                     f"[OpenJCK] {len(t.steps)} steps | "
                     f"{t.total_tokens_in + t.total_tokens_out} tokens | "
+                    f"${t.total_cost_usd:.4f} | "
                     f"{t.total_duration_ms}ms"
                 )
                 print(f"[OpenJCK] View trace: http://localhost:7823/trace/{t.trace_id}")
@@ -64,10 +104,11 @@ def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
             finally:
                 TraceCollector.finish(t, error=error_msg)
                 TraceStorage.save(t)
-                print(f"\n[OpenJCK] Run complete → {t.status.upper()}")
+                print(f"\n[OpenJCK] Run complete -> {t.status.upper()}")
                 print(
                     f"[OpenJCK] {len(t.steps)} steps | "
                     f"{t.total_tokens_in + t.total_tokens_out} tokens | "
+                    f"${t.total_cost_usd:.4f} | "
                     f"{t.total_duration_ms}ms"
                 )
                 print(f"[OpenJCK] View trace: http://localhost:7823/trace/{t.trace_id}")
@@ -89,7 +130,7 @@ def trace(name: str = None, metadata: dict = None, auto_open: bool = True):
 
 def trace_llm(func: Callable = None, *, model: str = None):
     """
-    Wraps an LLM call. Captures prompt, response, token counts.
+    Wraps an LLM call. Captures prompt, response, token counts, and cost.
 
     Usage:
         @trace_llm
@@ -115,6 +156,7 @@ def trace_llm(func: Callable = None, *, model: str = None):
                 result = func(*args, **kwargs)
                 cap.output = _extract_llm_output(result)
                 cap.tokens_in, cap.tokens_out = _extract_tokens(result)
+                cap.cost_usd = _get_model_cost(detected_model, cap.tokens_in, cap.tokens_out)
                 return result
 
         @functools.wraps(func)
@@ -128,6 +170,7 @@ def trace_llm(func: Callable = None, *, model: str = None):
                 result = await func(*args, **kwargs)
                 cap.output = _extract_llm_output(result)
                 cap.tokens_in, cap.tokens_out = _extract_tokens(result)
+                cap.cost_usd = _get_model_cost(detected_model, cap.tokens_in, cap.tokens_out)
                 return result
 
         if inspect.iscoroutinefunction(func):

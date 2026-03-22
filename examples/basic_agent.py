@@ -1,5 +1,5 @@
 """
-AgentClaw — Basic Agent Example
+OpenJCK — Basic Agent Example
 Demonstrates tracing of a simple agent workflow.
 """
 
@@ -10,7 +10,7 @@ from pathlib import Path
 # Add parent to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agentclaw import trace, trace_tool, trace_llm
+from openjck import trace, trace_tool, trace_llm
 
 
 # Simulated LLM call with token counting
@@ -120,7 +120,7 @@ def agent_run_with_error() -> dict:
 def main():
     """Run example traces."""
     print("=" * 60)
-    print("AgentClaw — Basic Agent Example")
+    print("OpenJCK — Basic Agent Example")
     print("=" * 60)
     print()
 
@@ -145,7 +145,7 @@ def main():
         print()
 
     # Verify traces were created
-    traces_dir = Path.home() / ".agentclaw" / "traces"
+    traces_dir = Path.home() / ".openjck" / "traces"
     if traces_dir.exists():
         trace_files = list(traces_dir.glob("*.json"))
         print(f"\n[OK] {len(trace_files)} trace files created in {traces_dir}")
@@ -155,7 +155,7 @@ def main():
 
     print()
     print("=" * 60)
-    print("Example completed! View traces in the AgentClaw UI:")
+    print("Example completed! View traces in the OpenJCK UI:")
     print("http://localhost:7823")
     print("=" * 60)
 

@@ -1,7 +1,7 @@
 """
-AgentTrace — Server
+OpenJCK — Server
 FastAPI backend. Serves trace data + the UI.
-Run: python -m agentclaw.server
+Run: python -m openjck.server
 """
 
 import sys
@@ -18,13 +18,13 @@ try:
     from fastapi.responses import HTMLResponse
     import uvicorn
 except ImportError:
-    print("[AgentClaw] Missing dependencies. Run: pip install agentclaw[server]")
+    print("[OpenJCK] Missing dependencies. Run: pip install openjck[server]")
     print("Or: pip install fastapi uvicorn")
     sys.exit(1)
 
-from agentclaw.storage import TraceStorage, SERVER_PORT
+from openjck.storage import TraceStorage, SERVER_PORT
 
-app = FastAPI(title="AgentTrace", docs_url=None, redoc_url=None)
+app = FastAPI(title="OpenJCK", docs_url=None, redoc_url=None)
 
 app.add_middleware(
     CORSMiddleware,
@@ -152,10 +152,10 @@ UI_PATH = Path(__file__).parent / "ui" / "index.html"
 def serve_ui(trace_id: str = None):
     if UI_PATH.exists():
         return UI_PATH.read_text()
-    return HTMLResponse("<h1>AgentClaw UI not found. Run: agentclaw build-ui</h1>")
+    return HTMLResponse("<h1>OpenJCK UI not found. Run: openjck build-ui</h1>")
 
 
 if __name__ == "__main__":
-    print(f"\n[AgentClaw] UI running at http://localhost:{SERVER_PORT}")
-    print("[AgentClaw] Serving traces from ~/.agentclaw/traces/\n")
+    print(f"\n[OpenJCK] UI running at http://localhost:{SERVER_PORT}")
+    print("[OpenJCK] Serving traces from ~/.openjck/traces/\n")
     uvicorn.run(app, host="0.0.0.0", port=SERVER_PORT, log_level="error")

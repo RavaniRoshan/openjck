@@ -1,7 +1,7 @@
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from agentclaw.intelligence import analyse_trace, DependencyChainTracer, RecoveryPointDetector
+from openjck.intelligence import analyse_trace, DependencyChainTracer, RecoveryPointDetector
 
 
 def test_root_cause_detection():

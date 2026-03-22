@@ -1,16 +1,16 @@
 <div align="center">
 
-<img width="900" height="220" alt="AgentClaw — Visual debugger for AI agent loops" src="https://github.com/user-attachments/assets/9c5847ff-0702-44ef-88f8-2a1f5e514543" />
+<img width="900" height="220" alt="OpenJCK — Visual debugger for AI agent loops" src="https://github.com/user-attachments/assets/9c5847ff-0702-44ef-88f8-2a1f5e514543" />
 
 <br />
 <br />
 
-[![npm](https://img.shields.io/npm/v/agentclaw?color=7c6af7&labelColor=1a1a1f&style=flat-square&label=npm)](https://www.npmjs.com/package/agentclaw)
-[![PyPI](https://img.shields.io/pypi/v/agentclaw?color=3ecf8e&labelColor=1a1a1f&style=flat-square&label=pip)](https://pypi.org/project/agentclaw/)
-[![Python](https://img.shields.io/pypi/pyversions/agentclaw?color=4da6ff&labelColor=1a1a1f&style=flat-square)](https://pypi.org/project/agentclaw/)
+[![npm](https://img.shields.io/npm/v/openjck?color=7c6af7&labelColor=1a1a1f&style=flat-square&label=npm)](https://www.npmjs.com/package/openjck)
+[![PyPI](https://img.shields.io/pypi/v/openjck?color=3ecf8e&labelColor=1a1a1f&style=flat-square&label=pip)](https://pypi.org/project/openjck/)
+[![Python](https://img.shields.io/pypi/pyversions/openjck?color=4da6ff&labelColor=1a1a1f&style=flat-square)](https://pypi.org/project/openjck/)
 [![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-f5a623?labelColor=1a1a1f&style=flat-square)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-white?labelColor=1a1a1f&style=flat-square)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/ravaniroshan/agentclaw?color=7c6af7&labelColor=1a1a1f&style=flat-square)](https://github.com/ravaniroshan/agentclaw)
+[![GitHub Stars](https://img.shields.io/github/stars/RavaniRoshan/openjck?color=7c6af7&labelColor=1a1a1f&style=flat-square)](https://github.com/RavaniRoshan/openjck)
 
 <br />
 
@@ -36,7 +36,7 @@ The LLM got a bad prompt? A tool returned garbage? A file permission failed sile
 
 **This is the debugging dark age for AI agents.** No step-by-step visibility. No tool call inspector. No way to see what the LLM was actually thinking at each decision point.
 
-AgentClaw fixes this.
+OpenJCK fixes this.
 
 ---
 
@@ -45,14 +45,14 @@ AgentClaw fixes this.
 **Two packages. One shared purpose.**
 
 ```
-pip install agentclaw              ← instruments your Python agent
-npx agentclaw                      ← opens the visual trace viewer
+pip install openjck              ← instruments your Python agent
+npx openjck                      ← opens the visual trace viewer
 ```
 
 **Step 1 — Instrument your agent** (add 3 decorators, nothing else changes):
 
 ```python
-from agentclaw import trace, trace_llm, trace_tool
+from openjck import trace, trace_llm, trace_tool
 import ollama
 
 @trace(name="research_agent")
@@ -73,15 +73,15 @@ def web_search(query: str) -> str:
 **Step 2 — Run your agent normally:**
 
 ```
-[AgentClaw] Run complete → COMPLETED
-[AgentClaw] 8 steps  |  2840 tokens  |  4.2s
-[AgentClaw] View trace → http://localhost:7823/trace/a3f9c1b2
+[OpenJCK] Run complete → COMPLETED
+[OpenJCK] 8 steps  |  2840 tokens  |  4.2s
+[OpenJCK] View trace → http://localhost:7823/trace/a3f9c1b2
 ```
 
 **Step 3 — Open the viewer:**
 
 ```bash
-npx agentclaw
+npx openjck
 ```
 
 You see this:
@@ -110,7 +110,7 @@ Bug found. Fixed in 30 seconds.
 ## Dashboard
 
 ```bash
-npx agentclaw
+npx openjck
 ```
 
 Open http://localhost:7823 to see:
@@ -121,7 +121,7 @@ Open http://localhost:7823 to see:
 
 ### Failure Intelligence
 
-When an agent run fails, AgentClaw automatically identifies the root cause:
+When an agent run fails, OpenJCK automatically identifies the root cause:
 
 - Which step made the run unrecoverable
 - Why that step's output caused the downstream failure
@@ -142,10 +142,10 @@ Your Agent Code
 TraceCollector              captures every event in-memory, per-thread
     │
     ▼
-~/.agentclaw/traces/        one JSON file per run — never leaves your machine
+~/.openjck/traces/        one JSON file per run — never leaves your machine
     │
     ▼
-Express server              localhost:7823  (Node.js · npx agentclaw)
+Express server              localhost:7823  (Node.js · npx openjck)
     │
     ▼
 Visual UI                   timeline + step inspector + token counts
@@ -153,33 +153,33 @@ Visual UI                   timeline + step inspector + token counts
 
 **Everything is local.** No cloud. No accounts. No API keys. No data leaves your machine.
 
-Both the Python library and the npm CLI read from the **same folder** — `~/.agentclaw/traces/`. Run your agent from Python, view traces from any terminal with `npx`. Zero config between them.
+Both the Python library and the npm CLI read from the **same folder** — `~/.openjck/traces/`. Run your agent from Python, view traces from any terminal with `npx`. Zero config between them.
 
 ---
 
 ## CLI Commands
 
 ```bash
-npx agentclaw              # start UI viewer (default)
-npx agentclaw ui           # start UI viewer
-npx agentclaw traces       # list all traces in terminal
-npx agentclaw clear        # delete all traces
-npx agentclaw --version    # show version
-npx agentclaw --help       # show help
+npx openjck              # start UI viewer (default)
+npx openjck ui           # start UI viewer
+npx openjck traces       # list all traces in terminal
+npx openjck clear        # delete all traces
+npx openjck --version    # show version
+npx openjck --help       # show help
 ```
 
 **Global install** (optional — skip `npx` every time):
 
 ```bash
-npm install -g agentclaw
-agentclaw ui
-agentclaw traces
+npm install -g openjck
+openjck ui
+openjck traces
 ```
 
-**What `agentclaw traces` looks like:**
+**What `openjck traces` looks like:**
 
 ```
-  AgentClaw — Recorded Runs
+  OpenJCK — Recorded Runs
 
   ID          Name                  Status      Steps   Duration    Tokens
   ────────────────────────────────────────────────────────────────────────
@@ -187,7 +187,7 @@ agentclaw traces
   9c4b1e3f    failing_agent         failed      6       2.41s       1345
               ✕ FileNotFoundError: File not found: config.txt
 
-  2 runs total  ·  npx agentclaw ui to view in browser
+  2 runs total  ·  npx openjck ui to view in browser
 ```
 
 ---
@@ -263,7 +263,7 @@ Wraps a tool call. Captures input arguments, return value, and any exception.
 For wrapping third-party code or dynamic dispatch:
 
 ```python
-from agentclaw import EventCapture
+from openjck import EventCapture
 
 with EventCapture("tool_call", "database.query", input={"sql": query}) as cap:
     result = db.execute(query)
@@ -276,7 +276,7 @@ with EventCapture("tool_call", "database.query", input={"sql": query}) as cap:
 ### `TraceStorage` — programmatic access
 
 ```python
-from agentclaw import TraceStorage
+from openjck import TraceStorage
 
 traces = TraceStorage.list_all()           # all trace summaries
 trace  = TraceStorage.load("a3f9c1b2")    # full trace with all steps
@@ -288,7 +288,7 @@ TraceStorage.search(q="research", status="failed")  # filter traces
 
 ## Framework Support
 
-AgentClaw is **framework-agnostic**. Wrap the functions. That's it.
+OpenJCK is **framework-agnostic**. Wrap the functions. That's it.
 
 ```python
 # ✅ Raw Python agents
@@ -304,8 +304,8 @@ AgentClaw is **framework-agnostic**. Wrap the functions. That's it.
 ### LangChain — zero decorators via auto-patch
 
 ```python
-import agentclaw
-agentclaw.patch_langchain()    # instruments all LangChain LLM + tool calls
+import openjck
+openjck.patch_langchain()    # instruments all LangChain LLM + tool calls
 
 @trace(name="my_chain")
 def run():
@@ -354,10 +354,10 @@ async def call_llm(messages):
 
 ## Trace Storage
 
-All traces are plain JSON at `~/.agentclaw/traces/<trace_id>.json`.
+All traces are plain JSON at `~/.openjck/traces/<trace_id>.json`.
 
 ```
-~/.agentclaw/
+~/.openjck/
 └── traces/
     ├── a3f9c1b2.json   # completed — 8 steps, 2840 tokens
     ├── 9c4b1e3f.json   # failed — error at step 6
@@ -373,8 +373,8 @@ Both the Python library and the npm CLI read and write to this same location. No
 ### Python library (required — for agent instrumentation)
 
 ```bash
-pip install agentclaw              # core library only
-pip install "agentclaw[server]"   # includes FastAPI UI server (alternative to npx)
+pip install openjck              # core library only
+pip install "openjck[server]"   # includes FastAPI UI server (alternative to npx)
 ```
 
 Requires: **Python 3.10+**
@@ -383,10 +383,10 @@ Requires: **Python 3.10+**
 
 ```bash
 # No install — always runs latest:
-npx agentclaw
+npx openjck
 
 # Or install once globally:
-npm install -g agentclaw
+npm install -g openjck
 ```
 
 Requires: **Node.js 18+**
@@ -395,7 +395,7 @@ Requires: **Node.js 18+**
 
 ## Why Not Just Use...
 
-| | AgentClaw | LangSmith | Helicone | Print statements |
+| | OpenJCK | LangSmith | Helicone | Print statements |
 |---|---|---|---|---|
 | Step-by-step visibility | ✅ | ✅ | ❌ | ❌ |
 | Works with any framework | ✅ | ❌ | ✅ | ✅ |
@@ -406,7 +406,7 @@ Requires: **Node.js 18+**
 | Cost tracking | ✅ | ✅ | ✅ | ❌ |
 | Zero config | ✅ | ❌ | ❌ | ✅ |
 
-AgentClaw is the only tool built specifically to debug **agentic loops** — the multi-step, tool-using, decision-making flows that break in ways traditional logging cannot explain.
+OpenJCK is the only tool built specifically to debug **agentic loops** — the multi-step, tool-using, decision-making flows that break in ways traditional logging cannot explain.
 
 ---
 
@@ -433,8 +433,8 @@ AgentClaw is the only tool built specifically to debug **agentic loops** — the
 - Fixed FOREIGN KEY constraint on intelligence table
 - Fixed version display inconsistencies
 
-**Python Package:** `agentclaw` on PyPI
-**npm Package:** `agentclaw` on npm
+**Python Package:** `openjck` on PyPI
+**npm Package:** `openjck` on npm
 
 ### v0.2.0 (2026-03-15)
 
@@ -470,7 +470,7 @@ AgentClaw is the only tool built specifically to debug **agentic loops** — the
 - [ ] VS Code extension
 
 **v1.0** *(horizon)*
-- [ ] AgentClaw Cloud — share traces across your team
+- [ ] OpenJCK Cloud — share traces across your team
 - [ ] Team dashboards + run history
 - [ ] Slack / Discord alerts on agent failure
 - [ ] Export trace as shareable HTML report
@@ -482,33 +482,33 @@ AgentClaw is the only tool built specifically to debug **agentic loops** — the
 Built because debugging agents was making us insane.
 
 ```bash
-git clone https://github.com/ravaniroshan/agentclaw
-cd agentclaw
+git clone https://github.com/RavaniRoshan/openjck
+cd openjck
 
 # Python library
 pip install -e ".[server]"
 python examples/basic_agent.py     # generates sample traces
 
 # npm CLI
-cd agentclaw-npm
+cd openjck-npm
 npm install
-node bin/agentclaw.js traces       # verify traces from above
-node bin/agentclaw.js ui           # open UI at localhost:7823
+node bin/openjck.js traces       # verify traces from above
+node bin/openjck.js ui           # open UI at localhost:7823
 ```
 
 Before opening a PR:
 - Open an issue first for non-trivial changes
 - Add an example for new features
 - Keep `collector.py` and `decorators.py` dependency-free (stdlib only)
-- Keep `bin/agentclaw.js` working without any build step
+- Keep `bin/openjck.js` working without any build step
 
 ---
 
 ## Repository Structure
 
 ```
-AgentClaw/
-├── agentclaw/               ← Python library (pip install agentclaw)
+OpenJCK/
+├── openjck/               ← Python library (pip install openjck)
 │   ├── collector.py         ← core event capture, thread-safe
 │   ├── decorators.py        ← @trace @trace_llm @trace_tool
 │   ├── intelligence.py      ← failure intelligence engine
@@ -517,15 +517,15 @@ AgentClaw/
 │   ├── server.py            ← FastAPI server (Python alternative)
 │   ├── cli.py               ← Python CLI entry point
 │   └── ui/                  ← web viewer UI
-├── agentclaw-npm/           ← npm package (npx agentclaw)
-│   ├── bin/agentclaw.js     ← CLI entrypoint
+├── openjck-npm/           ← npm package (npx openjck)
+│   ├── bin/openjck.js     ← CLI entrypoint
 │   ├── src/
 │   │   ├── server.js        ← Express server
 │   │   ├── db.js            ← SQLite database
 │   │   ├── commands/        ← ui, traces, clear
 │   │   └── ui/index.html    ← dashboard UI
 │   └── package.json
-├── agentclaw-site/          ← docs site (Astro + Starlight)
+├── openjck-site/          ← docs site (Astro + Starlight)
 ├── examples/
 │   ├── basic_agent.py       ← demo agent
 │   └── dashboard_demo.py    ← dashboard demo
@@ -546,7 +546,7 @@ AgentClaw/
 
 <br />
 
-**If this saved you an hour of debugging — [star the repo](https://github.com/ravaniroshan/agentclaw).**
+**If this saved you an hour of debugging — [star the repo](https://github.com/RavaniRoshan/openjck).**
 
 That's the only metric that matters right now.
 
@@ -554,13 +554,13 @@ That's the only metric that matters right now.
 
 Made with frustration and Python + Node.js
 &nbsp;·&nbsp;
-[GitHub](https://github.com/ravaniroshan/agentclaw)
+[GitHub](https://github.com/RavaniRoshan/openjck)
 &nbsp;·&nbsp;
-[npm](https://www.npmjs.com/package/agentclaw)
+[npm](https://www.npmjs.com/package/openjck)
 &nbsp;·&nbsp;
-[PyPI](https://pypi.org/project/agentclaw/)
+[PyPI](https://pypi.org/project/openjck/)
 &nbsp;·&nbsp;
-[Docs](https://agentclaw.dev)
+[Docs](https://openjck.dev)
 
 <br />
 

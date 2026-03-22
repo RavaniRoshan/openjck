@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #0a0a0b;
+    font-family: 'JetBrains Mono', monospace;
+    display: flex; flex-direction: column;
+    justify-content: center; padding: 80px;
+    border-top: 3px solid #7c6af7;
+  }
+  .logo { color: #7c6af7; font-size: 20px; margin-bottom: 40px; letter-spacing: 2px; }
+  h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 64px; color: #ffffff;
+    line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px;
+  }
+  .sub { color: #55556a; font-size: 20px; letter-spacing: 3px; margin-bottom: 60px; }
+  .cmds { display: flex; gap: 24px; }
+  .cmd {
+    background: #18181d; border: 1px solid #2a2a35;
+    border-radius: 8px; padding: 12px 24px;
+    color: #7c6af7; font-size: 18px;
+  }
+  .url { position: absolute; bottom: 40px; right: 80px; color: #2a2a35; font-size: 14px; }
+</style>
+</head>
+<body>
+  <div class="logo">◈ OPENJCK</div>
+  <h1>Visual debugger for<br/>AI agent loops.</h1>
+  <div class="sub">STEP-BY-STEP · LOCALLY · ZERO CONFIG</div>
+  <div class="cmds">
+    <div class="cmd">pip install openjck</div>
+    <div class="cmd">npx openjck</div>
+  </div>
+  <div class="url">openjck.dev</div>
+</body>
+</html>

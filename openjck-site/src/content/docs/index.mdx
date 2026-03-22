@@ -1,0 +1,94 @@
+---
+title: OpenJCK
+description: Visual debugger for AI agent loops. Step-by-step. Locally. Zero config.
+template: splash
+hero:
+  tagline: Your agent ran 15 steps. Something broke at step 9. You had no idea why.
+  actions:
+    - text: Quick Start
+      link: /guides/quickstart/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/RavaniRoshan/openjck
+      icon: external
+      variant: secondary
+---
+
+import { Card, CardGrid, Tabs, TabItem } from "@astrojs/starlight/components";
+
+## Install in 30 seconds
+
+<Tabs>
+  <TabItem label="pip (Python tracer)">
+    ```bash
+    pip install openjck
+    ```
+  </TabItem>
+  <TabItem label="npx (UI viewer)">
+    ```bash
+    npx openjck
+    ```
+  </TabItem>
+  <TabItem label="npm global">
+    ```bash
+    npm install -g openjck
+    ```
+  </TabItem>
+</Tabs>
+
+## Add 3 decorators. Nothing else changes.
+
+```python
+from openjck import trace, trace_llm, trace_tool
+import ollama
+
+@trace(name="research_agent")
+def run_agent(task: str):
+    response = call_llm([{"role": "user", "content": task}])
+    result = web_search(response.message.content)
+    write_file("output.md", result)
+
+@trace_llm
+def call_llm(messages: list):
+    return ollama.chat(model="qwen2.5:7b", messages=messages)
+
+@trace_tool
+def web_search(query: str) -> str:
+    ...
+```
+
+## What you get
+
+<CardGrid>
+  <Card title="Step-by-step timeline" icon="list-format">
+    Every step your agent took, visualized as a clickable timeline. See the exact sequence of decisions.
+  </Card>
+  <Card title="Full LLM visibility" icon="magnifier">
+    Exact prompt, response, token counts, model name, and latency — per call.
+  </Card>
+  <Card title="Tool call inspector" icon="puzzle">
+    Every tool invocation: function name, arguments, return value, execution time.
+  </Card>
+  <Card title="Error pinpointing" icon="warning">
+    When a step fails, the timeline highlights it red. Click it. See the full traceback instantly.
+  </Card>
+  <Card title="Any framework" icon="approve-check-circle">
+    LangChain, CrewAI, AutoGen, LlamaIndex, Ollama, raw Python. No lock-in.
+  </Card>
+  <Card title="100% local" icon="laptop">
+    No cloud. No accounts. No API keys. ~/.openjck/traces/ only.
+  </Card>
+</CardGrid>
+
+## OpenJCK vs. the alternatives
+
+| | OpenJCK | LangSmith | Helicone | Print statements |
+|---|---|---|---|---|
+| Step-by-step visibility | ✅ | ✅ | ❌ | ❌ |
+| Works with any framework | ✅ | ❌ | ✅ | ✅ |
+| 100% local | ✅ | ❌ | ❌ | ✅ |
+| Free forever | ✅ | Partial | Partial | ✅ |
+| Visual UI | ✅ | ✅ | ✅ | ❌ |
+| Token + cost tracking | ✅ | ✅ | ✅ | ❌ |
+| Zero config | ✅ | ❌ | ❌ | ✅ |

@@ -1,9 +1,9 @@
 """
-AgentTrace — Basic Example
-Run this to see AgentTrace in action.
+OpenJCK — Basic Example
+Run this to see OpenJCK in action.
 
 Requirements:
-    pip install agentclaw ollama
+    pip install openjck ollama
 
 Then: ollama pull qwen2.5-coder:7b-instruct-q4_K_M
 """
@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 import json
 import time
 import random
-from agentclaw import trace, trace_llm, trace_tool
+from openjck import trace, trace_llm, trace_tool
 
 
 # ── Simulated Tools (no real dependencies) ───────────────────────────────────
@@ -207,7 +207,7 @@ def run_failing_agent(task: str):
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  AgentTrace — Example Agent")
+    print("  OpenJCK — Example Agent")
     print("=" * 60)
 
     # Run 1: Successful agent
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     try:
         run_failing_agent("Read the project notes and create a summary")
     except FileNotFoundError:
-        print("[Demo 2] Agent failed as expected — check AgentTrace to see where!")
+        print("[Demo 2] Agent failed as expected — check OpenJCK to see where!")
 
     print("\n" + "=" * 60)
     print("  Open http://localhost:7823 to see both traces")

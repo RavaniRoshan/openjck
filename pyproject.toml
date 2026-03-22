@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "agentclaw"
+name = "openjck"
 version = "0.3.0"
 description = "Visual debugger for AI agents. See every step, every decision, every failure."
 readme = "README.md"
@@ -37,19 +37,19 @@ all = [
 ]
 
 [project.scripts]
-agentclaw = "agentclaw.cli:main"
+openjck = "openjck.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/RavaniRoshan/agentclaw"
-Documentation = "https://github.com/RavaniRoshan/agentclaw#readme"
-Issues = "https://github.com/RavaniRoshan/agentclaw/issues"
+Homepage = "https://github.com/RavaniRoshan/openjck"
+Documentation = "https://github.com/RavaniRoshan/openjck#readme"
+Issues = "https://github.com/RavaniRoshan/openjck/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["agentclaw*"]
+include = ["openjck*"]
 
 [tool.setuptools.package-data]
-agentclaw = ["ui/*.html", "ui/*.js", "ui/*.css"]
+openjck = ["ui/*.html", "ui/*.js", "ui/*.css"]
 
 [tool.ruff]
 line-length = 100

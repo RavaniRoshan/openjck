@@ -1,6 +1,6 @@
 """
-AgentTrace — Storage
-Saves traces as JSON to ~/.agentclaw/traces/
+OpenJCK — Storage
+Saves traces as JSON to ~/.openjck/traces/
 Zero dependencies beyond stdlib.
 """
 
@@ -15,7 +15,7 @@ from typing import Optional
 from .collector import Trace
 
 
-TRACES_DIR = Path.home() / ".agentclaw" / "traces"
+TRACES_DIR = Path.home() / ".openjck" / "traces"
 SERVER_PORT = 7823
 _server_started = False
 _server_lock = threading.Lock()
@@ -152,13 +152,13 @@ class TraceStorage:
         def start():
             try:
                 subprocess.Popen(
-                    [sys.executable, "-m", "agentclaw.server"],
+                    [sys.executable, "-m", "openjck.server"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                 )
             except Exception as e:
-                print(f"[AgentClaw] Could not start UI server: {e}")
-                print("[AgentClaw] Start manually: python -m agentclaw.server")
+                print(f"[OpenJCK] Could not start UI server: {e}")
+                print("[OpenJCK] Start manually: python -m openjck.server")
 
         t = threading.Thread(target=start, daemon=True)
         t.start()

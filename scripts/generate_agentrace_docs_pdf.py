@@ -30,7 +30,7 @@ from reportlab.platypus import (
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "output" / "pdf"
-PDF_PATH = OUTPUT_DIR / "agentclaw-product-documentation.pdf"
+PDF_PATH = OUTPUT_DIR / "openjck-product-documentation.pdf"
 
 PALETTE = {
     "ink": colors.HexColor("#10233F"),
@@ -49,9 +49,9 @@ PALETTE = {
 
 def load_project_context() -> dict:
     pyproject = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    npm_package = json.loads((ROOT / "agentclaw-npm" / "package.json").read_text(encoding="utf-8"))
+    npm_package = json.loads((ROOT / "openjck-npm" / "package.json").read_text(encoding="utf-8"))
 
-    trace_dir = ROOT / "tmp-home" / ".agentclaw" / "traces"
+    trace_dir = ROOT / "tmp-home" / ".openjck" / "traces"
     traces = []
     if trace_dir.exists():
         for path in sorted(trace_dir.glob("*.json")):
@@ -275,7 +275,7 @@ def architecture_diagram() -> DrawingFlowable:
     nodes = [
         (25, 135, 120, 60, PALETTE["blue"], "Python agent", "Decorated entry point, tools, and LLM calls"),
         (175, 135, 120, 60, PALETTE["mint"], "TraceCollector", "In-process step capture and aggregation"),
-        (325, 135, 120, 60, PALETTE["cyan"], "JSON storage", "~/.agentclaw/traces and costs.json"),
+        (325, 135, 120, 60, PALETTE["cyan"], "JSON storage", "~/.openjck/traces and costs.json"),
         (165, 38, 140, 66, PALETTE["gold"], "Local viewer", "Express or FastAPI server with browser UI"),
     ]
 
@@ -367,7 +367,7 @@ def viewer_mock_diagram() -> DrawingFlowable:
     rounded_box(d, 154, 86, 292, 40, colors.HexColor("#122744"), colors.HexColor("#2D5BA5"), radius=16)
     rounded_box(d, 154, 136, 292, 96, colors.HexColor("#F6F9FD"), colors.HexColor("#D7E0EC"), radius=16)
 
-    d.add(String(38, 212, "AgentTrace", fontName="Helvetica-Bold", fontSize=15, fillColor=colors.white))
+    d.add(String(38, 212, "OpenJCK", fontName="Helvetica-Bold", fontSize=15, fillColor=colors.white))
     d.add(String(38, 194, "Recorded runs", fontName="Helvetica-Bold", fontSize=9, fillColor=colors.HexColor("#BFD3FF")))
     for idx, label in enumerate(["agent_run_success", "agent_run_with_error", "research_agent"]):
         y = 164 - idx * 48
@@ -404,8 +404,8 @@ def repo_map_diagram() -> DrawingFlowable:
     d.add(String(10, 220, "Repository map", fontName="Helvetica-Bold", fontSize=13, fillColor=PALETTE["ink"]))
 
     columns = [
-        (20, "agentclaw/", PALETTE["blue"], ["collector.py", "decorators.py", "storage.py", "server.py", "integrations/langchain.py"]),
-        (170, "agentclaw-npm/", PALETTE["cyan"], ["bin/agentclaw.js", "src/server.js", "commands/ui.js", "commands/traces.js", "src/ui/index.html"]),
+        (20, "openjck/", PALETTE["blue"], ["collector.py", "decorators.py", "storage.py", "server.py", "integrations/langchain.py"]),
+        (170, "openjck-npm/", PALETTE["cyan"], ["bin/openjck.js", "src/server.js", "commands/ui.js", "commands/traces.js", "src/ui/index.html"]),
         (320, "supporting assets", PALETTE["mint"], ["examples/basic_agent.py", "landing/index.html", "README.md", "pyproject.toml"]),
     ]
     for x, title, fill, items in columns:
@@ -451,7 +451,7 @@ def metric_table(context: dict) -> Table:
     failed_trace = context["failed_trace"] or {}
     rows = [
         ["Documentation timestamp", context["date"]],
-        ["Python package", f"agentclaw {context['python_version']}"],
+        ["Python package", f"openjck {context['python_version']}"],
         ["npm package", f"{context['npm_package']} {context['npm_version']}"],
         ["Sample success run", f"{len(success_trace.get('steps', []))} steps, {success_trace.get('total_tokens', 0)} tokens, {success_trace.get('total_duration_ms', 'n/a')} ms"],
         ["Sample failure run", failed_trace.get("error", "No failure sample found")],
@@ -507,11 +507,11 @@ def surface_cards(context: dict, styles) -> Table:
 def command_table() -> Table:
     rows = [
         ["Command", "Purpose"],
-        ["pip install agentclaw", "Install the Python instrumentation package."],
-        ["npx agentclaw", "Start the local viewer on http://localhost:7823."],
-        ["npx agentclaw traces", "List all stored traces in the terminal."],
-        ["npx agentclaw clear", "Delete recorded trace JSON files after confirmation."],
-        ["agentclaw.patch_langchain()", "Monkey-patch LangChain primitives for automatic step capture."],
+        ("pip install openjck", "Install the Python instrumentation package."),
+        ("npx openjck", "Start the local viewer on http://localhost:7823."),
+        ("npx openjck traces", "List all stored traces in the terminal."),
+        ("npx openjck clear", "Delete recorded trace JSON files after confirmation."),
+        ("openjck.patch_langchain()", "Monkey-patch LangChain primitives for automatic step capture."),
     ]
     table = Table(rows, colWidths=[180, 250], repeatRows=1)
     table.setStyle(
@@ -598,7 +598,7 @@ def cover_block(context: dict, styles) -> list:
     intro = Table(
         [
             [Paragraph("Product Documentation", styles["SmallLabel"])],
-            [Paragraph("AgentTrace", styles["DocTitle"])],
+            [Paragraph("OpenJCK", styles["DocTitle"])],
             [
                 Paragraph(
                     "A dedicated product document for the current repository state: what the package does, how the tracing pipeline works, what ships today, and where the viewer, CLI, and storage layers fit together.",
@@ -630,7 +630,7 @@ def cover_block(context: dict, styles) -> list:
             ],
             [
                 Paragraph(context["date"], styles["CardTitle"]),
-                Paragraph(f"agentclaw {context['python_version']}", styles["CardTitle"]),
+                Paragraph(f"openjck {context['python_version']}", styles["CardTitle"]),
                 Paragraph(f"{context['npm_package']} {context['npm_version']}", styles["CardTitle"]),
             ],
         ],
@@ -674,7 +674,7 @@ def build_story(context: dict) -> list:
         [
             Paragraph("1. Product Snapshot", styles["SectionTitle"]),
             Paragraph(
-                "AgentTrace is a local-first observability layer for AI agents. Instead of replacing an agent framework, it wraps existing Python functions and records the real execution path: every agent entry, every tool call, every LLM interaction, and every failure state.",
+                "OpenJCK is a local-first observability layer for AI agents. Instead of replacing an agent framework, it wraps existing Python functions and records the real execution path: every agent entry, every tool call, every LLM interaction, and every failure state.",
                 styles["SectionLead"],
             ),
             metric_table(context),
@@ -724,7 +724,7 @@ def build_story(context: dict) -> list:
             ),
             code_panel(
                 """
-from agentclaw import trace, trace_llm, trace_tool
+from openjck import trace, trace_llm, trace_tool
 
 @trace(name="research_agent")
 def run_agent(task: str):
@@ -774,7 +774,7 @@ def web_search(query: str):
             Spacer(1, 12),
             code_panel(
                 """
-from agentclaw import patch_langchain
+from openjck import patch_langchain
 
 patch_langchain()
 
@@ -839,7 +839,7 @@ patch_langchain()
         [
             Paragraph("6. Storage, Search, and HTTP Surface", styles["SectionTitle"]),
             Paragraph(
-                "Storage is deliberately simple: one JSON file per run under ~/.agentclaw/traces/, plus a costs.json file that seeds default model pricing. That simplicity makes it easy to inspect, back up, clear, and port traces between machines.",
+                "Storage is deliberately simple: one JSON file per run under ~/.openjck/traces/, plus a costs.json file that seeds default model pricing. That simplicity makes it easy to inspect, back up, clear, and port traces between machines.",
                 styles["SectionLead"],
             ),
             endpoint_table(),
@@ -908,7 +908,7 @@ patch_langchain()
             HRFlowable(color=PALETTE["border"], width="100%"),
             Spacer(1, 8),
             Paragraph(
-                "Bottom line: AgentTrace is best described as a local-first agent debugging product made of a Python tracer and a browser-based trace viewer. The current repository already communicates a compelling product thesis and contains enough working surface area to document it as a real package, not just a prototype snippet.",
+                "Bottom line: OpenJCK is best described as a local-first agent debugging product made of a Python tracer and a browser-based trace viewer. The current repository already communicates a compelling product thesis and contains enough working surface area to document it as a real package, not just a prototype snippet.",
                 ParagraphStyle(
                     "Closing",
                     parent=styles["BodyText"],
@@ -932,7 +932,7 @@ def draw_footer(canvas, doc):
     canvas.line(doc.leftMargin, 12 * mm, A4[0] - doc.rightMargin, 12 * mm)
     canvas.setFont("Helvetica", 8)
     canvas.setFillColor(PALETTE["muted"])
-    canvas.drawString(doc.leftMargin, 8 * mm, "AgentTrace Product Documentation")
+    canvas.drawString(doc.leftMargin, 8 * mm, "OpenJCK Product Documentation")
     canvas.drawRightString(A4[0] - doc.rightMargin, 8 * mm, f"Page {page_num - 1}")
     canvas.restoreState()
 
@@ -947,7 +947,7 @@ def main():
         rightMargin=18 * mm,
         topMargin=18 * mm,
         bottomMargin=18 * mm,
-        title="AgentTrace Product Documentation",
+        title="OpenJCK Product Documentation",
         author="Codex",
     )
     story = build_story(context)
