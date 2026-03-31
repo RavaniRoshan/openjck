@@ -116,6 +116,7 @@ export default defineConfig({
             { label: "Failure Intelligence", slug: "guides/failure-intelligence" },
             { label: "How It Works", slug: "guides/how-it-works" },
             { label: "Installation", slug: "guides/installation" },
+            { label: "Changelog", slug: "changelog" },
           ],
         },
         {

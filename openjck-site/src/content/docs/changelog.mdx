@@ -1,0 +1,38 @@
+---
+title: Changelog
+description: Latest updates and releases for OpenJCK.
+---
+
+Stay up-to-date with what's new in OpenJCK.
+
+## v0.2.2 
+
+**The Dashboard Redesign**
+
+We completely overhauled the core visual mechanics of the OpenJCK dashboard to bring it to a professional, developer-tier aesthetic.
+
+- **React + Vite Architecture:** We ripped out the vanilla HTML and rebuilt the dashboard into a highly modular Single Page Application.
+- **Dark Mode Aesthetic:** Say goodbye to blurry gradients and generic glow. We've shifted to a rigorous, flat dark-mode interface with sharp `#3e3e3e` boundaries and bright green `#3ecf8e` active states (inspired by dev tools like Supabase and Vercel).
+- **Custom Scrollbars:** We replaced the clunky default browser scrollbars with custom ultra-thin webkit scrollbars that blend invisibly until you need them.
+- **ASCII Welcome Banner:** When you run `npx openjck` (after this is published!), you'll now be greeted by a styled `figlet` banner in the CLI instead of a generic text block.
+- **Improved Detail Panel:** Traces and API payloads have been compressed into an advanced dual-pane tabular grid, making JSON navigation incredibly readable.
+
+## v0.2.1
+
+**The Intelligence Engine**
+
+- Live dashboard with real-time updates at `http://localhost:7823`
+- Agent drill-down view with patterns analysis
+- Trace detail view with step timeline
+- **Failure Intelligence Engine** — automatic root cause analysis and recovery point detection.
+- SQLite database for robust local persistence.
+- Time filters (24h, 7d, all).
+
+## v0.2.0
+
+- Initial v0.2 feature release.
+
+## v0.1.0
+
+- Core library release (`@trace`, `@trace_llm`, `@trace_tool`).
+- Foundational local observability.
