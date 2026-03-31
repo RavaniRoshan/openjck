@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openjck"
-version = "0.3.0"
+version = "0.2.1"
 description = "Visual debugger for AI agents. See every step, every decision, every failure."
 readme = "README.md"
 license = { text = "MIT" }

@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .storage import TraceStorage
 
-app = FastAPI(title="OpenJCK", version="0.3.0")
+app = FastAPI(title="OpenJCK", version="0.2.1")
 
 # Add CORS middleware to allow all origins
 app.add_middleware(
@@ -31,7 +31,7 @@ UI_DIR = Path(__file__).parent / "ui"
 @app.get("/api/health")
 def health():
     """Health check endpoint."""
-    return {"status": "ok", "version": "0.3.0"}
+    return {"status": "ok", "version": "0.2.1"}
 
 
 @app.get("/api/traces")
@@ -70,7 +70,7 @@ def serve_index():
     """Serve the main UI."""
     index_path = UI_DIR / "index.html"
     if not index_path.exists():
-        raise HTTPException(status_code=404, detail="UI not found")
+        return {"message": "Dashboard UI moved to npm package. Run: npx openjck"}
     return FileResponse(str(index_path), media_type="text/html")
 
 
@@ -79,7 +79,7 @@ def serve_trace_page(trace_id: str):
     """Serve the UI for a specific trace."""
     index_path = UI_DIR / "index.html"
     if not index_path.exists():
-        raise HTTPException(status_code=404, detail="UI not found")
+        return {"message": "Dashboard UI moved to npm package. Run: npx openjck"}
     return FileResponse(str(index_path), media_type="text/html")
 
 

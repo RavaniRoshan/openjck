@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const VERSION = "0.3.0";
+const VERSION = "0.2.1";
 
 const HELP_TEXT = `
   OpenJCK — Visual debugger for AI agent loops

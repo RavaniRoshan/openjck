@@ -1,0 +1,92 @@
+﻿[36mvite v8.0.3 [32mbuilding client environment for production...[36m[39m
+[2K
+transforming...Γ£ô 2127 modules transformed.
+node.exe : [31mΓ£ù[39m Build failed in 
+440ms
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: ([31mΓ£ù[39m Build failed in 440  
+  ms:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+[31merror during build:
+[31mBuild failed with 1 error:
+
+[plugin vite:css] C:/Users/Admin/OneDrive/
+Documents/GitHub/openjck/openjck-npm/dashb
+oard/src/index.css
+Failed to load PostCSS config: Failed to 
+load PostCSS config (searchPath: C:/Users/
+Admin/OneDrive/Documents/GitHub/openjck/op
+enjck-npm/dashboard): [ReferenceError] 
+module is not defined in ES module scope
+This file is being treated as an ES 
+module because it has a '.js' file 
+extension and 'C:\Users\Admin\OneDrive\Doc
+uments\GitHub\openjck\openjck-npm\dashboar
+d\package.json' contains "type": 
+"module". To treat it as a CommonJS 
+script, rename it to use the '.cjs' file 
+extension.
+ReferenceError: module is not defined in 
+ES module scope
+This file is being treated as an ES 
+module because it has a '.js' file 
+extension and 'C:\Users\Admin\OneDrive\Doc
+uments\GitHub\openjck\openjck-npm\dashboar
+d\package.json' contains "type": 
+"module". To treat it as a CommonJS 
+script, rename it to use the '.cjs' file 
+extension.
+    at file:///C:/Users/Admin/OneDrive/Doc
+uments/GitHub/openjck/openjck-npm/dashboar
+d/postcss.config.js?t=1774971988036:1:1
+    at ModuleJob.run (node:internal/module
+s/esm/module_job:430:25)
+    at async 
+onImport.tracePromise.__proto__ 
+(node:internal/modules/esm/loader:661:26)
+    at async req (file:///C:/Users/Admin/O
+neDrive/Documents/GitHub/openjck/openjck-n
+pm/dashboard/node_modules/vite/dist/node/c
+hunks/node.js:19511:12)
+    at async Object.search (file:///C:/Use
+rs/Admin/OneDrive/Documents/GitHub/openjck
+/openjck-npm/dashboard/node_modules/vite/d
+ist/node/chunks/node.js:19329:24)[31m
+    at aggregateBindingErrorsIntoJsError (
+file:///C:/Users/Admin/OneDrive/Documents/
+GitHub/openjck/openjck-npm/dashboard/node_
+modules/rolldown/dist/shared/error-BLhcSye
+g.mjs:48:18)
+    at unwrapBindingResult (file:///C:/Use
+rs/Admin/OneDrive/Documents/GitHub/openjck
+/openjck-npm/dashboard/node_modules/rolldo
+wn/dist/shared/error-BLhcSyeg.mjs:18:128)
+    at #build (file:///C:/Users/Admin/OneD
+rive/Documents/GitHub/openjck/openjck-npm/
+dashboard/node_modules/rolldown/dist/share
+d/rolldown-build-CPrIX9V6.mjs:3313:34)
+    at async buildEnvironment (file:///C:/
+Users/Admin/OneDrive/Documents/GitHub/open
+jck/openjck-npm/dashboard/node_modules/vit
+e/dist/node/chunks/node.js:32849:64)
+    at async Object.build (file:///C:/User
+s/Admin/OneDrive/Documents/GitHub/openjck/
+openjck-npm/dashboard/node_modules/vite/di
+st/node/chunks/node.js:33271:19)
+    at async Object.buildApp (file:///C:/U
+sers/Admin/OneDrive/Documents/GitHub/openj
+ck/openjck-npm/dashboard/node_modules/vite
+/dist/node/chunks/node.js:33268:153)
+    at async CAC.<anonymous> (file:///C:/U
+sers/Admin/OneDrive/Documents/GitHub/openj
+ck/openjck-npm/dashboard/node_modules/vite
+/dist/node/cli.js:778:3) {
+  errors: [Getter/Setter]
+}[39m

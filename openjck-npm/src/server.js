@@ -320,7 +320,7 @@ print(json.dumps({
   });
 
   app.get("/api/health", (req, res) => {
-    res.json({ status: "ok", version: "0.3.0", runtime: "node" });
+    res.json({ status: "ok", version: "0.2.1", runtime: "node" });
   });
 
   app.get("/api/traces", (req, res) => {
@@ -351,17 +351,13 @@ print(json.dumps({
     res.json({ deleted: req.params.traceId });
   });
 
-  const serveUI = (req, res) => {
-    if (existsSync(UI_FILE)) {
-      res.sendFile(UI_FILE);
-      return;
-    }
+  // Serve the compiled Vite static assets from src/ui/
+  const UI_DIR = join(__dirname, "ui");
+  app.use(express.static(UI_DIR));
 
-    res.type("html").send("<h1>OpenJCK UI not found</h1>");
-  };
-
-  app.get("/", serveUI);
-  app.get("/trace/:traceId", serveUI);
+  app.get("*", (req, res) => {
+    res.sendFile(join(UI_DIR, "index.html"));
+  });
 
   return app;
 }

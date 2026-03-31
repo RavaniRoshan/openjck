@@ -4,6 +4,7 @@ import { createServer } from "http";
 import chalk from "chalk";
 import ora from "ora";
 import open from "open";
+import { showWelcome } from "../welcome.js";
 
 export async function startUI() {
   if (!existsSync(TRACES_DIR)) {
@@ -42,21 +43,8 @@ export async function startUI() {
 
   spinner.stop();
 
-  console.log("");
-  console.log(
-    `  ${chalk.hex("#7c6af7")("◈ OpenJCK")}  ${chalk.gray("v0.3.0")}`,
-  );
-  console.log("");
-  console.log(`  ${chalk.white("UI       ")}${chalk.cyan("http://localhost:7823")}`);
-  console.log(`  ${chalk.white("Traces   ")}${chalk.gray(TRACES_DIR)}`);
-  console.log(
-    `  ${chalk.white("Runtime  ")}${chalk.gray(`Node.js ${process.version}`)}`,
-  );
-  console.log("");
-  console.log(
-    `${chalk.gray("  Watching for new traces. Press ")}${chalk.white("Ctrl+C")}${chalk.gray(" to stop.")}`,
-  );
-  console.log("");
+  // Show the branded welcome banner after server is ready
+  showWelcome(TRACES_DIR);
 
   try {
     await open("http://localhost:7823");
