@@ -262,6 +262,61 @@ const steps = [
     }
 
     /* ═══════════════════════════════════════════════════
+       3.5 LATEST UPDATES BANNER
+       ═══════════════════════════════════════════════════ */
+    .updates-sec {
+      border-top: 1px solid var(--border-light);
+      background: #FAFAFA;
+      padding: 16px 0;
+    }
+    .updates__inner {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .updates-badge {
+      background: var(--brand-purple);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .updates-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .updates-content h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0;
+    }
+    .updates-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .updates-btn {
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border-light);
+      background: #fff;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+    .updates-btn:hover {
+      border-color: var(--text-main);
+      background: var(--text-main);
+      color: #fff;
+    }
+
+    /* ═══════════════════════════════════════════════════
        4. LOGOS
        ═══════════════════════════════════════════════════ */
     .logos {
@@ -705,6 +760,18 @@ const steps = [
           <a href="https://github.com/RavaniRoshan/openjck" class="btn btn-outline">Star on GitHub</a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 3.5 LATEST UPDATES -->
+  <section class="updates-sec">
+    <div class="container updates__inner">
+      <div class="updates-badge">Update</div>
+      <div class="updates-content">
+        <h3>v0.2.2 Released</h3>
+        <p>The dashboard has been completely redesigned with a new dark-mode architecture.</p>
+      </div>
+      <a href="/changelog" class="updates-btn">Read the Changelog &rarr;</a>
     </div>
   </section>
 
