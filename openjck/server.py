@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .storage import TraceStorage
 
-app = FastAPI(title="OpenJCK", version="0.3.0")
+app = FastAPI(title="OpenJCK", version="0.3.2")
 
 # Add CORS middleware to allow all origins
 app.add_middleware(
@@ -31,7 +31,7 @@ UI_DIR = Path(__file__).parent / "ui"
 @app.get("/api/health")
 def health():
     """Health check endpoint."""
-    return {"status": "ok", "version": "0.3.0"}
+    return {"status": "ok", "version": "0.3.2"}
 
 
 @app.get("/api/traces")

@@ -1,6 +1,6 @@
 {
   "name": "openjck",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "Visual debugger for AI agent loops. Step-by-step. Locally. Zero config.",
   "type": "module",
   "bin": {
